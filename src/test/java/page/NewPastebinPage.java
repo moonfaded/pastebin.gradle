@@ -36,7 +36,7 @@ public class NewPastebinPage extends AbstractPage {
   }
 
   public boolean hasBashButton() {
-    Utilities.waitForElementVisibility(bashButton, driver);
+    Utilities.waitForElementToBeClickable(bashButton, driver);
     return bashButton.isDisplayed();
   }
 }

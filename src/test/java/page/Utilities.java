@@ -11,6 +11,10 @@ public class Utilities {
     new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(element));
   }
 
+  public static void waitForElementToBeClickable(WebElement element, WebDriver driver) {
+    new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(element));
+  }
+
   public static void clickOnTheVisibleElement(WebElement element, WebDriver driver) {
     new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(element)).click();
   }

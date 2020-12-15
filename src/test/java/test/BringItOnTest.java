@@ -1,24 +1,23 @@
 package test;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import page.NewPastebinPage;
 import page.PastebinHomePage;
 
 public class BringItOnTest {
-  private final String PASTE_NAME = "how to gain dominance among developers";
-  private final String CODE = "git config --global user.name  \"New Sheriff in Town\"\n"
+  private static final String PASTE_NAME = "how to gain dominance among developers";
+  private static final String CODE = "git config --global user.name  \"New Sheriff in Town\"\n"
                                   + "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n"
                                   + "git push origin master --force";
-  private WebDriver driver;
-  private NewPastebinPage newPage;
+  private static WebDriver driver;
+  private static NewPastebinPage newPage;
 
-  @BeforeEach
-  public void setupBrowser() {
+  @BeforeAll
+  static void setupBrowser() {
+    WebDriverManager.chromedriver().setup();
     driver = new ChromeDriver();
     driver.manage().window().maximize();
 
@@ -32,23 +31,24 @@ public class BringItOnTest {
   }
 
   @Test
-  public void checkIfReceivedTitleMatchesPasteName() {
+  public void receivedTitleMatchesPasteName() {
     Assertions.assertEquals(newPage.getPasteName(), PASTE_NAME);
   }
 
   @Test
-  public void checkIfSyntaxIsHighlighted() {
+  public void syntaxIsHighlighted() {
     Assertions.assertTrue(newPage.hasBashButton());
   }
 
   @Test
-  public void checkIfReceivedTextMatchesCode() {
+  public void receivedTextMatchesCode() {
     Assertions.assertTrue(newPage.getHighlightedText().contains(CODE));
   }
 
-  @AfterEach
-  public void closeBrowser() {
-    driver.quit();
-    driver = null;
+  @AfterAll
+  static void closeBrowser() {
+    if (driver != null) {
+      driver.quit();
+    }
   }
 }

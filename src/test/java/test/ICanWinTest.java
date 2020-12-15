@@ -1,5 +1,6 @@
 package test;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ public class ICanWinTest {
 
   @BeforeEach
   public void setupBrowser() {
+    WebDriverManager.chromedriver().setup();
     driver = new ChromeDriver();
     driver.manage().window().maximize();
   }
@@ -31,7 +33,8 @@ public class ICanWinTest {
 
   @AfterEach
   public void closeBrowser() {
-    driver.quit();
-    driver = null;
+    if (driver != null) {
+      driver.quit();
+    }
   }
 }
