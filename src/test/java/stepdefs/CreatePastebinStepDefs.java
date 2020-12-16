@@ -21,13 +21,21 @@ public class CreatePastebinStepDefs {
 
   PastebinHomePage pastebinHomePage;
   NewPastebinPage newPastebinPage;
+
   private WebDriver driver;
+  private final String PASTE_CODE = "git config --global user.name  \"New Sheriff in Town\"\n"
+          + "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n"
+          + "git push origin master --force";
+  private final String PASTE_NAME = "how to gain dominance among developers";
+
 
   @Before
   public void setUp() {
     WebDriverManager.chromedriver().setup();
     driver = new ChromeDriver();
     driver.manage().window().maximize();
+    pastebinHomePage = new PastebinHomePage(driver);
+    newPastebinPage = new NewPastebinPage(driver);
   }
 
   @Given("I opened pastebin page")
@@ -61,11 +69,9 @@ public class CreatePastebinStepDefs {
   @Then("Created paste match parameters")
   public void receivedTitleMatchesPasteName() {
     newPastebinPage = new NewPastebinPage(driver);
-    Assertions.assertEquals(newPastebinPage.getPasteName(), "how to gain dominance among developers");
+    Assertions.assertEquals(newPastebinPage.getPasteName(), PASTE_NAME);
     Assertions.assertTrue(newPastebinPage.hasBashButton());
-    Assertions.assertTrue(newPastebinPage.getHighlightedText().contains("git config --global user.name  \"New Sheriff in Town\"\n"
-            + "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n"
-            + "git push origin master --force"));
+    Assertions.assertTrue(newPastebinPage.getHighlightedText().contains(PASTE_CODE));
   }
 
   @After
