@@ -1,6 +1,8 @@
 package stepdefs;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -21,18 +23,15 @@ public class CreatePastebinStepDefs {
   NewPastebinPage newPastebinPage;
   private WebDriver driver;
 
-//  @BeforeEach
-//  public void setupBrowser() {
-//    WebDriverManager.chromedriver().setup();
-//    driver = new ChromeDriver();
-//    driver.manage().window().maximize();
-//  }
-
-  @Given("I opened pastebin page")
-  public void openPastebinPage() {
+  @Before
+  public void setUp() {
     WebDriverManager.chromedriver().setup();
     driver = new ChromeDriver();
     driver.manage().window().maximize();
+  }
+
+  @Given("I opened pastebin page")
+  public void openPastebinPage() {
     pastebinHomePage = new PastebinHomePage(driver).openPage();
   }
 
@@ -67,5 +66,12 @@ public class CreatePastebinStepDefs {
     Assertions.assertTrue(newPastebinPage.getHighlightedText().contains("git config --global user.name  \"New Sheriff in Town\"\n"
             + "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n"
             + "git push origin master --force"));
+  }
+
+  @After
+  public void tearDown() {
+    if (driver != null) {
+      driver.quit();
+    }
   }
 }

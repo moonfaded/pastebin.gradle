@@ -42,23 +42,20 @@ public class PastebinHomePage extends AbstractPage {
     return this;
   }
 
-  public PastebinHomePage selectSyntaxHighlightingAsBash() {
+  public void selectSyntaxHighlightingAsBash() {
     Utilities.selectFromTheDropdownList(syntaxHighlightingMenu, syntaxHighlightingBashOption, driver);
-    return this;
   }
 
-  public PastebinHomePage selectPasteExpirationAsTenMinutes() {
+  public void selectPasteExpirationAsTenMinutes() {
     Utilities.selectFromTheDropdownList(pasteExpirationMenu, pasteExpirationTenMinutesOption, driver);
-    return this;
   }
 
-  public PastebinHomePage addPasteNameOrTitle(String pasteName) {
+  public void addPasteNameOrTitle(String pasteName) {
     pasteNameOrTitle.sendKeys(pasteName);
-    return this;
   }
 
-  public NewPastebinPage createNewPaste() {
+  public void createNewPaste() {
     newPasteButton.click();
-    return new NewPastebinPage(driver);
+    new NewPastebinPage(driver);
   }
 }
